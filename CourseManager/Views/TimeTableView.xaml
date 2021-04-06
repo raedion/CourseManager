@@ -1,0 +1,102 @@
+﻿<Window x:Class="CourseManager.Views.TimeTableView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:CourseManager.Views"
+        xmlns:vm="clr-namespace:CourseManager.ViewModels"
+        Title="時間割" Height="350" Width="525">
+
+    <Window.DataContext>
+        <vm:TimeTableViewModel />
+    </Window.DataContext>
+
+    <behaviors:Interaction.Triggers>
+        <!-- When ContentRendered event raised, Initialize method of ViewModel would be called. -->
+        <behaviors:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
+        </behaviors:EventTrigger>
+
+        <!-- Dispose method is called, when Window closing. -->
+        <behaviors:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction />
+        </behaviors:EventTrigger>
+
+        <!-- If you make user choose 'OK or Cancel' closing Window, then please use Window Close cancel Behavior. -->
+
+    </behaviors:Interaction.Triggers>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" />
+        <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Background="#FFE1B7F6"/>
+        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="6" Background="#FFE1B7F6"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="1時間目"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="2時間目"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="3時間目"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="4時間目"/>
+        <Label Grid.Row="6" Grid.Column="1" Content="5時間目"/>
+        <Label Grid.Row="7" Grid.Column="1" Content="6時間目"/>
+        <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center"  Content="月"/>
+        <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center"  Content="火"/>
+        <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center"  Content="水"/>
+        <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center"  Content="木"/>
+        <Label Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center"  Content="金"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding MondaySubj[0]}"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding MondaySubj[1]}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding MondaySubj[2]}"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding MondaySubj[3]}"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding MondaySubj[4]}"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding MondaySubj[5]}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding TuesdaySubj[0]}"/>
+        <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding TuesdaySubj[1]}"/>
+        <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding TuesdaySubj[2]}"/>
+        <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding TuesdaySubj[3]}"/>
+        <TextBlock Grid.Row="6" Grid.Column="3" Text="{Binding TuesdaySubj[4]}"/>
+        <TextBlock Grid.Row="7" Grid.Column="3" Text="{Binding TuesdaySubj[5]}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding WednesdaySubj[0]}"/>
+        <TextBlock Grid.Row="3" Grid.Column="4" Text="{Binding WednesdaySubj[1]}"/>
+        <TextBlock Grid.Row="4" Grid.Column="4" Text="{Binding WednesdaySubj[2]}"/>
+        <TextBlock Grid.Row="5" Grid.Column="4" Text="{Binding WednesdaySubj[3]}"/>
+        <TextBlock Grid.Row="6" Grid.Column="4" Text="{Binding WednesdaySubj[4]}"/>
+        <TextBlock Grid.Row="7" Grid.Column="4" Text="{Binding WednesdaySubj[5]}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding ThursdaySubj[0]}"/>
+        <TextBlock Grid.Row="3" Grid.Column="5" Text="{Binding ThursdaySubj[1]}"/>
+        <TextBlock Grid.Row="4" Grid.Column="5" Text="{Binding ThursdaySubj[2]}"/>
+        <TextBlock Grid.Row="5" Grid.Column="5" Text="{Binding ThursdaySubj[3]}"/>
+        <TextBlock Grid.Row="6" Grid.Column="5" Text="{Binding ThursdaySubj[4]}"/>
+        <TextBlock Grid.Row="7" Grid.Column="5" Text="{Binding ThursdaySubj[5]}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="6" Text="{Binding FridaySubj[0]}"/>
+        <TextBlock Grid.Row="3" Grid.Column="6" Text="{Binding FridaySubj[1]}"/>
+        <TextBlock Grid.Row="4" Grid.Column="6" Text="{Binding FridaySubj[2]}"/>
+        <TextBlock Grid.Row="5" Grid.Column="6" Text="{Binding FridaySubj[3]}"/>
+        <TextBlock Grid.Row="6" Grid.Column="6" Text="{Binding FridaySubj[4]}"/>
+        <TextBlock Grid.Row="7" Grid.Column="6" Text="{Binding FridaySubj[5]}"/>
+    </Grid>
+
+</Window>
