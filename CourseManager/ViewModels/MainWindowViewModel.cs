@@ -14,6 +14,7 @@ using Livet.Messaging.Windows;
 using CourseManager.Models;
 using System.Collections.ObjectModel;
 using CourseManager.Views;
+using CourseManager.Models.Calc;
 
 namespace CourseManager.ViewModels
 {
@@ -79,42 +80,52 @@ namespace CourseManager.ViewModels
         }
 
 
-        public string TotalCredit {
-            get { return _totalCredit; }
+        public int TotalCredit {
+            get { return _totalCredit.Value; }
             set { 
-                if (_totalCredit == value)
+                if (_totalCredit.Value == value)
                     return;
-                _totalCredit = value;
+                _totalCredit.Value = value;
+                IsFillRequireTotal = _totalCredit.CheckRequire();
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillRequireTotal));
             }
         }
-        private string _totalCredit = "0";
+        private CreditCalc _totalCredit = new CreditTotalCalc();
 
-        public string ExpertCredit
+        public bool IsFillRequireTotal { get; private set; }
+
+        public int ExpertCredit 
         {
-            get { return _expertCredit; }
+            get { return _expertCredit.Value; }
             set { 
-                if (_expertCredit == value)
+                if (_expertCredit.Value == value)
                     return;
-                _expertCredit = value;
+                _expertCredit.Value = value;
+                IsFillRequireExpert = _expertCredit.CheckRequire();
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillRequireExpert));
             }
         }
-        private string _expertCredit = "0";
+        private CreditCalc _expertCredit = new CreditExpertCalc();
 
-        public string InternationalCredit
+        public bool IsFillRequireExpert { get; set; }
+
+        public int InternationalCredit
         {
-            get
-            { return _internationalCredit; }
+            get { return _internationalCredit.Value; }
             set
             { 
-                if (_internationalCredit == value)
+                if (_internationalCredit.Value == value)
                     return;
-                _internationalCredit = value;
+                _internationalCredit.Value = value;
+                IsFillRequireInternational = _internationalCredit.CheckRequire();
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillRequireInternational));
             }
         }
-        private string _internationalCredit = "0";
+        private CreditCalc _internationalCredit = new CreditInternationalCalc();
+        public bool IsFillRequireInternational { get; set; }
 
         private ViewModelCommand _DoubleClickCommand;
 
@@ -150,31 +161,11 @@ namespace CourseManager.ViewModels
                 new TimeTableViewModel(DataList.Where(e => e.IsChecked)), TransitionMode.NewOrActive));
         }
 
-
-        private ViewModelCommand _SingleClickCommand;
-
-        public ViewModelCommand SingleClickCommand
-        {
-            get
-            {
-                if (_SingleClickCommand == null)
-                {
-                    _SingleClickCommand = new ViewModelCommand(SingleClick);
-                }
-                return _SingleClickCommand;
-            }
-        }
-
         private void CalcCredit(bool val)
         {
-            TotalCredit = CreditCalc.ExecTotal(int.Parse(TotalCredit), SelectedItem).ToString();
-            ExpertCredit = CreditCalc.ExecExpert(int.Parse(ExpertCredit), SelectedItem).ToString();
-            InternationalCredit = CreditCalc.ExecInternational(int.Parse(InternationalCredit), SelectedItem).ToString();
+            TotalCredit = _totalCredit.ExecCalc(SelectedItem);
+            ExpertCredit = _expertCredit.ExecCalc(SelectedItem);
+            InternationalCredit = _internationalCredit.ExecCalc(SelectedItem);
         }
-        public void SingleClick()
-        {
-            TotalCredit = CreditCalc.ExecTotal(int.Parse(TotalCredit), SelectedItem).ToString();
-        }
-
     }
 }

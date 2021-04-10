@@ -49,7 +49,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="1" />
-        <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Background="#FFE1B7F6"/>
+        <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Background="#AFE1B7B6"/>
         <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="6" Background="#FFE1B7F6"/>
         <Label Grid.Row="2" Grid.Column="1" Content="1時間目"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2時間目"/>
@@ -62,6 +62,22 @@
         <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center"  Content="水"/>
         <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center"  Content="木"/>
         <Label Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center"  Content="金"/>
+
+        <Border Background="Beige" Grid.Row="2" Grid.Column="2"/>
+        <Border Background="Beige" Grid.Row="4" Grid.Column="2"/>
+        <Border Background="Beige" Grid.Row="6" Grid.Column="2"/>
+        <Border Background="Beige" Grid.Row="3" Grid.Column="3"/>
+        <Border Background="Beige" Grid.Row="5" Grid.Column="3"/>
+        <Border Background="Beige" Grid.Row="7" Grid.Column="3"/>
+        <Border Background="Beige" Grid.Row="2" Grid.Column="4"/>
+        <Border Background="Beige" Grid.Row="4" Grid.Column="4"/>
+        <Border Background="Beige" Grid.Row="6" Grid.Column="4"/>
+        <Border Background="Beige" Grid.Row="3" Grid.Column="5"/>
+        <Border Background="Beige" Grid.Row="5" Grid.Column="5"/>
+        <Border Background="Beige" Grid.Row="7" Grid.Column="5"/>
+        <Border Background="Beige" Grid.Row="2" Grid.Column="6"/>
+        <Border Background="Beige" Grid.Row="4" Grid.Column="6"/>
+        <Border Background="Beige" Grid.Row="6" Grid.Column="6"/>
 
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding MondaySubj[0]}"/>
         <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding MondaySubj[1]}"/>
