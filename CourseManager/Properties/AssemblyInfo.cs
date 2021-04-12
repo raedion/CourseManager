@@ -1,4 +1,20 @@
-﻿using System.Reflection;
+﻿/* =======================================================================================
+ *     講義履修科目確認ソフトウェア
+ *
+ *		FileName	AssemblyInfo.cs
+ * 		Create		2021/04/07～	
+ * 		UpDate	    			
+ * 		Version		0.0.0.1		
+ * 		Programmer  raedion		
+ * 
+ *		Language	C# 6.0	(.NET 4.6)
+ * =======================================================================================
+ *  2021/04/07 0.0.0.0  raedion    ・Create Start 
+ *  2021/04/12 0.0.0.1  raedion    ・各種機能の追加
+ *                                 ・ドキュメントの追記
+ * =======================================================================================
+ */
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -32,5 +48,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]               // アセンブリバージョン(変更しない)
+[assembly: AssemblyFileVersion("1.0.2021.0412")]     // ファイルバージョン
+[assembly: AssemblyInformationalVersion("0.0.0.1")]  // 製品バージョン
