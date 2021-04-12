@@ -8,13 +8,16 @@ namespace CourseManager.Models.Calc
 {
     class CreditTotalCalc : CreditCalc
     {
+        public CreditTotalCalc(Func<int, bool> func) : base(func)
+        {
+        }
         public override int ExecCalc(Data data)
         {
             return Value + data.Credit * (data.IsChecked ? 1 : -1);
         }
         public override bool CheckRequire()
         {
-            return Value >= 30;
+            return CalcMethod(Value);
         }
     }
 }

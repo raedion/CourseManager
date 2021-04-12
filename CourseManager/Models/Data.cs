@@ -15,7 +15,7 @@ namespace CourseManager.Models
 
         }
         public Data(int id, string section, string subjectName, string day,
-            string teacherName, int credit, int grade, bool isExpert, bool isInternational)
+            string teacherName, int credit, int grade, Enums.EExpert isExpert, bool isInternational)
         {
             Id = id;
             Section = section;
@@ -39,7 +39,7 @@ namespace CourseManager.Models
         public string TeacherName { get;  set; }
         public int Credit { get;  set; }
         public int Grade { get;  set; }
-        public bool IsExpert { get;  set; }
+        public Enums.EExpert IsExpert { get;  set; }
         public bool IsInternational { get;  set; }
 
         public bool IsChecked {

@@ -8,6 +8,10 @@ namespace CourseManager.Models
 {
     public abstract class CreditCalc : NotificationObject
     {
+        public CreditCalc(Func<int, bool> func)
+        {
+            CalcMethod = func;
+        }
         /// <summary>
         /// 単位計算に関するメソッド
         /// </summary>
@@ -24,5 +28,6 @@ namespace CourseManager.Models
         /// Viewに表示する単位数
         /// </summary>
         public int Value { get; set; }
+        public Func<int, bool> CalcMethod { get; private set; }
     }
 }

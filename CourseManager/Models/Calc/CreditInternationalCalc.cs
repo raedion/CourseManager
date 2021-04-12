@@ -8,13 +8,16 @@ namespace CourseManager.Models.Calc
 {
     class CreditInternationalCalc : CreditCalc
     {
+        public CreditInternationalCalc(Func<int, bool> func) : base(func)
+        {
+        }
         public override int ExecCalc(Data data)
         {
             return Value + (data.IsInternational ? data.Credit * (data.IsChecked ? 1 : -1) : 0);
         }
         public override bool CheckRequire()
         {
-            return Value >= 2;
+            return CalcMethod(Value);
         }
     }
 }

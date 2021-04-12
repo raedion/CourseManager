@@ -91,7 +91,7 @@ namespace CourseManager.ViewModels
                 RaisePropertyChanged(nameof(IsFillRequireTotal));
             }
         }
-        private CreditCalc _totalCredit = new CreditTotalCalc();
+        private CreditCalc _totalCredit = new CreditTotalCalc(x => x >= 30);
 
         public bool IsFillRequireTotal { get; private set; }
 
@@ -107,9 +107,74 @@ namespace CourseManager.ViewModels
                 RaisePropertyChanged(nameof(IsFillRequireExpert));
             }
         }
-        private CreditCalc _expertCredit = new CreditExpertCalc();
+        private CreditCalc _expertCredit = new CreditExpertCalc(x => x >= 22);
 
         public bool IsFillRequireExpert { get; set; }
+        public int SelectedCredit
+        {
+            get { return _SelectedCredit.Value; }
+            set
+            {
+                if (_SelectedCredit.Value == value)
+                    return;
+                _SelectedCredit.Value = value;
+                IsFillSelected = _SelectedCredit.CheckRequire();
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillSelected));
+            }
+        }
+        private CreditCalc _SelectedCredit = new CreditExpertCalc(x => x >= 0);
+        public bool IsFillSelected { get; private set; }
+
+        public int SelectedRequiredMajorBasic
+        {
+            get { return _SelectedRequiredMajorBasic.Value; }
+            set
+            {
+                if (_SelectedRequiredMajorBasic.Value == value)
+                    return;
+                _SelectedRequiredMajorBasic.Value = value;
+                IsFillSelectedRequiredMajorBasic = _SelectedRequiredMajorBasic.CheckRequire();
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillSelectedRequiredMajorBasic));
+            }
+        }
+        private CreditCalc _SelectedRequiredMajorBasic = new CreditExpertCalc(x => x >= 4);
+        public bool IsFillSelectedRequiredMajorBasic { get; private set; }
+
+        public int SelectedMajorBasicCredit
+        {
+            get { return _SelectedMajorBasicCredit.Value; }
+            set
+            {
+                if (_SelectedMajorBasicCredit.Value == value)
+                    return;
+                _SelectedMajorBasicCredit.Value = value;
+                IsFillSelectedMajorBasic = _SelectedMajorBasicCredit.CheckRequire();
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillSelectedMajorBasic));
+            }
+        }
+        private CreditCalc _SelectedMajorBasicCredit = new CreditExpertCalc(x => x >= 4);
+        public bool IsFillSelectedMajorBasic { get; private set; }
+
+        public int RequiredMajorBasicCredit
+        {
+            get
+            { return _requiredMajorBasicCredit.Value; }
+            set
+            { 
+                if (_requiredMajorBasicCredit.Value == value)
+                    return;
+                _requiredMajorBasicCredit.Value = value;
+                IsFillRequiredMajorBasicCredit = _requiredMajorBasicCredit.CheckRequire();
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsFillRequiredMajorBasicCredit));
+            }
+        }
+        private CreditCalc _requiredMajorBasicCredit = new CreditExpertCalc(x => x >= 4);
+        public bool IsFillRequiredMajorBasicCredit { get; set; }
+
 
         public int InternationalCredit
         {
@@ -124,24 +189,26 @@ namespace CourseManager.ViewModels
                 RaisePropertyChanged(nameof(IsFillRequireInternational));
             }
         }
-        private CreditCalc _internationalCredit = new CreditInternationalCalc();
+        private CreditCalc _internationalCredit = new CreditInternationalCalc(x => x >= 2);
         public bool IsFillRequireInternational { get; set; }
 
-        private ViewModelCommand _DoubleClickCommand;
 
-        public ViewModelCommand DoubleClickCommand {
-            get {
-                if (_DoubleClickCommand == null) {
-                    _DoubleClickCommand = new ViewModelCommand(DoubleClick);
-                }
-                return _DoubleClickCommand;
+        private int _advancedCredit;
+
+        public int AdvancedCredit
+        {
+            get
+            { return _advancedCredit; }
+            set
+            { 
+                if (_advancedCredit == value)
+                    return;
+                TotalCredit += value - _advancedCredit;
+                _advancedCredit = value;
+                RaisePropertyChanged();
             }
         }
 
-        public void DoubleClick()
-        {
-            SelectedItem.IsChecked = !SelectedItem.IsChecked;
-        }
 
         public Data SelectedItem {
             get { return _selectedItem; }
@@ -164,8 +231,32 @@ namespace CourseManager.ViewModels
         private void CalcCredit(bool val)
         {
             TotalCredit = _totalCredit.ExecCalc(SelectedItem);
+            if (SelectedItem.IsExpert is Enums.EExpert.RequiredMajorBasic ||
+                SelectedItem.IsExpert is Enums.EExpert.SelectedMajorBasic ||
+                SelectedItem.IsExpert is Enums.EExpert.SelectedRequiredMajorBasic1 ||
+                SelectedItem.IsExpert is Enums.EExpert.SelectedRequiredMajorBasic2)
             ExpertCredit = _expertCredit.ExecCalc(SelectedItem);
             InternationalCredit = _internationalCredit.ExecCalc(SelectedItem);
+            if (SelectedItem.IsExpert is Enums.EExpert.Selected)
+            {
+                SelectedCredit = _SelectedCredit.ExecCalc(SelectedItem);
+            }
+            else if (SelectedItem.IsExpert is Enums.EExpert.SelectedRequiredMajorBasic1)
+            {
+                SelectedRequiredMajorBasic = _SelectedRequiredMajorBasic.ExecCalc(SelectedItem);
+            }
+            else if (SelectedItem.IsExpert is Enums.EExpert.SelectedRequiredMajorBasic2)
+            {
+                SelectedRequiredMajorBasic = _SelectedRequiredMajorBasic.ExecCalc(SelectedItem);
+            }
+            else if (SelectedItem.IsExpert is Enums.EExpert.SelectedMajorBasic)
+            {
+                SelectedMajorBasicCredit = _SelectedMajorBasicCredit.ExecCalc(SelectedItem);
+            }
+            else if (SelectedItem.IsExpert is Enums.EExpert.RequiredMajorBasic)
+            {
+                RequiredMajorBasicCredit = _requiredMajorBasicCredit.ExecCalc(SelectedItem);
+            }
         }
     }
 }
