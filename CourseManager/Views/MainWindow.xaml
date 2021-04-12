@@ -7,14 +7,20 @@
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
     xmlns:v="clr-namespace:CourseManager.Views"
     xmlns:vm="clr-namespace:CourseManager.ViewModels"
+    xmlns:conv="clr-namespace:CourseManager.Converter"
     Title="科目単位計算"
-    Width="700"
+    MinWidth="800"
+    Width="800"
     Height="500">
 
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
+    <Window.Resources>
+        <conv:Bool2ColorConverter x:Key="b2c"/>
+    </Window.Resources>
+    
     <behaviors:Interaction.Triggers>
         <!--  When ContentRendered event raised, Initialize method of ViewModel would be called.  -->
         <behaviors:EventTrigger EventName="ContentRendered">
@@ -37,66 +43,89 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <Label Grid.Row="0" Grid.Column="0" Content="時間割表示" VerticalAlignment="Center"
-               Margin="10 10" HorizontalAlignment="Left"/>
+               Margin="10 5" HorizontalAlignment="Left"/>
         <Button Grid.Row="0" Grid.Column="1" Name="ShowTimeTable" Content="時間割表示" Command="{Binding ShowTimeTableCommand}"
-                Margin="10 10"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="取得単位数" VerticalAlignment="Center"
-               Margin="10 10" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TotalCredit}"
-               Margin="10 10"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="取得単位数(専)" VerticalAlignment="Center"
-               Margin="10 10" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding TotalExpertCredit}"
-               Margin="10 10"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="取得単位数(国)" VerticalAlignment="Center"
-               Margin="10 10" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding TotalInternationalCredit}"
-               Margin="10 10"/>
+                Margin="10 5"/>
+        
+        <Label Grid.Row="7" Grid.Column="0" Content="取得単位数" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalCredit}" VerticalAlignment="Center"
+               Margin="10 5" Foreground="{Binding IsFillRequireTotal, Converter={StaticResource b2c}}"/>
+        
+        <Label Grid.Row="2" Grid.Column="0" Content="専攻基礎科目" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ExpertCredit}" VerticalAlignment="Center"
+               Margin="10 5" Foreground="{Binding IsFillRequireExpert, Converter={StaticResource b2c}}"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="　専攻基礎科目(必須)" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RequiredMajorBasicCredit}" VerticalAlignment="Center"
+               Margin="10 5" Foreground="{Binding IsFillRequiredMajorBasicCredit, Converter={StaticResource b2c}}"/>
+
+        <Label Grid.Row="4" Grid.Column="0" Content="　専攻基礎科目(選択)" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SelectedRequiredMajorBasic}" VerticalAlignment="Center"
+               Margin="10 5" Foreground="{Binding IsFillSelectedRequiredMajorBasic, Converter={StaticResource b2c}}"/>
+        
+        <Label Grid.Row="5" Grid.Column="0" Content="選択科目" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCredit}" VerticalAlignment="Center"
+               Margin="10 5" Foreground="{Binding IsFillSelect, Converter={StaticResource b2c}}"/>
+        
+        <Label Grid.Row="6" Grid.Column="0" Content="高度教養教育科目" VerticalAlignment="Center"
+               Margin="10 5" HorizontalAlignment="Left"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding AdvancedCredit}" VerticalAlignment="Center"
+               Margin="6 5"/>
+
         <DataGrid Grid.Row="99" Grid.ColumnSpan="2" Margin="10 10" ItemsSource="{Binding DataList}" AutoGenerateColumns="False" IsReadOnly="True"
-                  SelectedItem="{Binding SelectedItem}">
-            <DataGrid.InputBindings>
-                <MouseBinding MouseAction="LeftDoubleClick"
-                              Command="{Binding DoubleClickCommand}"/>
-            </DataGrid.InputBindings>
+                  SelectedItem="{Binding SelectedItem}" SelectionMode="Single">
             <DataGrid.Columns>
+                <DataGridTemplateColumn IsReadOnly="False" Header="選択">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="ID" Width="40" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="開講区分" Width="100" Binding="{Binding Section}"/>
                 <DataGridTextColumn Header="学年" Width="50" Binding="{Binding Grade}"/>
-                <DataGridTextColumn Header="授業名" Width="*" Binding="{Binding SubjectName}"/>
+                <DataGridTextColumn Header="授業名" Width="2*" Binding="{Binding SubjectName}"/>
+                <DataGridTextColumn Header="教師名" Width="*" Binding="{Binding TeacherName}"/>
                 <DataGridTextColumn Header="曜日" Binding="{Binding Day}"/>
                 <DataGridTextColumn Header="単位数" Width="50" Binding="{Binding Credit}"/>
-                <DataGridTemplateColumn IsReadOnly="True" Header="専門教育科目" Width="100">
+                <DataGridTextColumn Header="専門教育科目" Width="150" Binding="{Binding IsExpert}"/>
+                <!--<DataGridTemplateColumn IsReadOnly="True" Header="専門教育科目" Width="90">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsExpert, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn IsReadOnly="True" Header="国際性科目" Width="100">
+                </DataGridTemplateColumn>-->
+                <DataGridTemplateColumn IsReadOnly="True" Header="国際性科目" Width="80">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsInternational, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn IsReadOnly="False" Header="選択">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

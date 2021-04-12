@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace CourseManager.Models
 
         }
         public Data(int id, string section, string subjectName, string day,
-            string teacherName, int credit, int grade, bool isExpert, bool isInternational)
+            string teacherName, int credit, int grade, Enums.EExpert isExpert, bool isInternational)
         {
             Id = id;
             Section = section;
@@ -30,6 +31,7 @@ namespace CourseManager.Models
         {
                 System.Diagnostics.Debug.WriteLine($"{SubjectName}, {Id}, {Section}");
         }
+        public Action<bool> IsCheckedAction;
         public int Id { get;  set; }
         public string Section { get;  set; }
         public string SubjectName { get;  set; }
@@ -37,7 +39,7 @@ namespace CourseManager.Models
         public string TeacherName { get;  set; }
         public int Credit { get;  set; }
         public int Grade { get;  set; }
-        public bool IsExpert { get;  set; }
+        public Enums.EExpert IsExpert { get;  set; }
         public bool IsInternational { get;  set; }
 
         public bool IsChecked {
@@ -46,9 +48,12 @@ namespace CourseManager.Models
                 if (_isChecked == value)
                     return;
                 _isChecked = value;
+                IsCheckedAction.Invoke(value);
                 RaisePropertyChanged();
             }
         }
         private bool _isChecked = false;
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
