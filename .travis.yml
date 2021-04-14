@@ -1,0 +1,8 @@
+language: csharp
+solution: CourseManager.sln
+install:
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" CourseManager.sln
+mono: 3.10.0
+script:
+- xbuild CourseManager.sln
+- dotnet restore
