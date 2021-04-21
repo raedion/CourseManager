@@ -4,7 +4,7 @@
  *		FileName	AssemblyInfo.cs
  * 		Create		2021/04/07～	
  * 		UpDate	    			
- * 		Version		0.0.0.1		
+ * 		Version		0.0.0.2		
  * 		Programmer  raedion		
  * 
  *		Language	C# 6.0	(.NET 4.6)
@@ -12,6 +12,7 @@
  *  2021/04/07 0.0.0.0  raedion    ・Create Start 
  *  2021/04/12 0.0.0.1  raedion    ・各種機能の追加
  *                                 ・ドキュメントの追記
+ *  2021/04/21 0.0.0.2  raedion    ・高度国際性涵養教育科目をウィンドウに表示するように変更
  * =======================================================================================
  */
 using System.Reflection;
@@ -49,5 +50,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]               // アセンブリバージョン(変更しない)
-[assembly: AssemblyFileVersion("1.0.2021.0412")]     // ファイルバージョン
-[assembly: AssemblyInformationalVersion("0.0.0.1")]  // 製品バージョン
+[assembly: AssemblyFileVersion("1.0.2021.0421")]     // ファイルバージョン
+[assembly: AssemblyInformationalVersion("0.0.0.2")]  // 製品バージョン
