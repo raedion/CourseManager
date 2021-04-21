@@ -1,5 +1,7 @@
 # CourseManager
 
+[![Build Status](https://travis-ci.org/raedion/CourseManager.svg?branch=master)](https://travis-ci.org/raedion/CourseManager)
+
 ## 概要
 大阪大学大学院情報科学研究科の授業を履修するにあたって必要となる単位数の計算などの実行を行えるようにした。
 

@@ -1,0 +1,5 @@
+language: csharp
+solution: CourseManager.sln
+install:
+- nuget restore CourseManager.sln
+mono: 3.12.0
