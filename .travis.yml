@@ -1,7 +1,8 @@
 language: csharp
 os: windows
 solution: CourseManager.sln
+mono: none
 install:
 - nuget restore CourseManager.sln
 script:
-  - msbuild /p:Configuration=Release CourseManager.sln
+- msbuild /p:Configuration=Release CourseManager.sln
