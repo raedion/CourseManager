@@ -2,5 +2,3 @@ language: csharp
 os: windows
 solution: CourseManager.sln
 mono: none
-script:
-- msbuild /p:Configuration=Release CourseManager.sln
