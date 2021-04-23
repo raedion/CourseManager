@@ -3,3 +3,5 @@ solution: CourseManager.sln
 install:
 - nuget restore CourseManager.sln
 mono: 3.12.0
+script:
+  - msbuild /p:Configuration=Release CourseManager.sln
